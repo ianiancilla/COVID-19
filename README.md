@@ -1,3 +1,13 @@
+<b>Marzia Faustinelli - COVID-19 visualisation project</b><br>
+This is a fork of the amazing data gathered and published each day by <b>Johns Hopkins CSSE</b>, which can be found here: https://github.com/CSSEGISandData/COVID-19
+
+The only thing I added is the <b>visualisation</b> folder, where I added a script which will analyse current data and visualise it.
+<br>
+* <b>Necessary libraries<b/>: needs <b>plotly</b> to run.<br>
+* <b>Output</b>: when running the script, html files wioth a scatter geo plot of each day will be created in the otput folder<br>
+ <br>
+ <br>
+
 # 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
 
 
