@@ -1,0 +1,126 @@
+PROVINCE/STATE,COUNTRY/REGION,LATITUDE,LONGITUDE
+Hubei,Mainland China,30.9756,112.2707
+,South Korea,36.0000,128.0000
+,Italy,43.0000,12.0000
+Guangdong,Mainland China,23.3417,113.4244
+Henan,Mainland China,33.8820,113.6140
+Zhejiang,Mainland China,29.1832,120.0934
+Hunan,Mainland China,27.6104,111.7088
+Anhui,Mainland China,31.8257,117.2264
+,Iran,32.0000,53.0000
+Jiangxi,Mainland China,27.6140,115.7221
+Shandong,Mainland China,36.3427,118.1498
+Diamond Princess cruise ship,Others,35.4437,139.6380
+Jiangsu,Mainland China,32.9711,119.4550
+Chongqing,Mainland China,30.0572,107.8740
+Sichuan,Mainland China,30.6171,102.7103
+Heilongjiang,Mainland China,47.8620,127.7615
+Beijing,Mainland China,40.1824,116.4142
+Shanghai,Mainland China,31.2020,121.4491
+Hebei,Mainland China,38.0428,114.5149
+Fujian,Mainland China,26.0789,117.9874
+,Japan,36.0000,138.0000
+Guangxi,Mainland China,23.8298,108.7881
+Shaanxi,Mainland China,35.1917,108.8701
+Yunnan,Mainland China,24.9740,101.4870
+Hainan,Mainland China,19.1959,109.7453
+Guizhou,Mainland China,26.8154,106.8748
+Tianjin,Mainland China,39.3054,117.3230
+Shanxi,Mainland China,37.5777,112.2922
+,France,47.0000,2.0000
+,Germany,51.0000,9.0000
+Liaoning,Mainland China,41.2956,122.6085
+,Singapore,1.2833,103.8333
+Hong Kong,Hong Kong,22.3000,114.2000
+Jilin,Mainland China,43.6661,126.1923
+Gansu,Mainland China,36.0611,103.8343
+,Spain,40.0000,-4.0000
+Xinjiang,Mainland China,41.1129,85.2401
+Inner Mongolia,Mainland China,44.0935,113.9448
+Ningxia,Mainland China,37.2692,106.1655
+,Bahrain,26.0275,50.5500
+,Kuwait,29.5000,47.7500
+Unassigned Location (From Diamond Princess),US,35.4437,139.6380
+,Thailand,15.0000,101.0000
+Taiwan,Taiwan,23.7000,121.0000
+,UK,55.0000,-3.0000
+,Malaysia,2.5000,112.5000
+,Switzerland,46.8182,8.2275
+,United Arab Emirates,24.0000,54.0000
+,Iraq,33.0000,44.0000
+,Norway,60.4720,8.4689
+Qinghai,Mainland China,35.7452,95.9956
+,Vietnam,16.0000,108.0000
+,Austria,47.5162,14.5501
+"Toronto, ON",Canada,43.6532,-79.3832
+,Sweden,63.0000,16.0000
+,Israel,31.0000,35.0000
+,Lebanon,33.8547,35.8623
+Macau,Macau,22.1667,113.5500
+,Netherlands,52.1326,5.2913
+Queensland,Australia,-28.0167,153.4000
+"Seattle, WA",US,47.6062,-122.3321
+British Columbia,Canada,49.2827,-123.1207
+Victoria,Australia,-37.8136,144.9631
+,Croatia,45.1000,15.2000
+,Greece,39.0742,21.8243
+New South Wales,Australia,-33.8688,151.2093
+,Ecuador,-1.8312,-78.1834
+,Finland,64.0000,26.0000
+,Oman,21.0000,57.0000
+,Mexico,23.0000,-102.0000
+,Denmark,56.2639,9.5018
+,Pakistan,30.3753,69.3451
+South Australia,Australia,-34.9285,138.6007
+,Azerbaijan,40.1431,47.5769
+,Czech Republic,49.8175,15.4730
+,Georgia,42.3154,43.3569
+,Iceland,64.9631,-19.0208
+,India,21.0000,78.0000
+,Philippines,13.0000,122.0000
+,Qatar,25.3548,51.1839
+,Romania,45.9432,24.9668
+"Chicago, IL",US,41.8781,-87.6298
+"Santa Clara, CA",US,37.3541,-121.9552
+Western Australia,Australia,-31.9505,115.8605
+,Belgium,50.8333,4.0000
+,Brazil,-14.2350,-51.9253
+,Egypt,26.0000,30.0000
+,Russia,60.0000,90.0000
+"Sacramento County, CA",US,38.4747,-121.3542
+"San Benito, CA",US,36.5761,-120.9876
+"San Diego County, CA",US,32.7157,-117.1611
+"Snohomish County, WA",US,48.0330,-121.8339
+,Afghanistan,33.0000,65.0000
+,Algeria,28.0339,1.6596
+,Armenia,40.0691,45.0382
+,Belarus,53.7098,27.9534
+,Cambodia,11.5500,104.9167
+"Montreal, QC",Canada,45.5017,-73.5673
+"London, ON",Canada,42.9849,-81.2453
+,Dominican Republic,18.7357,-70.1627
+,Estonia,58.5953,25.0136
+,Ireland,53.1424,-7.6921
+,Lithuania,55.1694,23.8813
+,Luxembourg,49.8153,6.1296
+Tibet,Mainland China,31.6927,88.0924
+,Monaco,43.7333,7.4167
+,Nepal,28.1667,84.2500
+,New Zealand,-40.9006,174.8860
+,Nigeria,9.0820,8.6753
+,North Macedonia,41.6086,21.7453
+,San Marino,43.9424,12.4578
+,Sri Lanka,7.0000,81.0000
+"Boston, MA",US,42.3601,-71.0589
+"Humboldt County, CA",US,40.7450,-123.8695
+"Los Angeles, CA",US,34.0522,-118.2437
+"Madison, WI",US,43.0731,-89.4012
+"Orange, CA",US,33.7879,-117.8531
+"Portland, OR",US,45.5051,-122.6750
+"Providence, RI",US,41.8240,-71.4128
+"San Antonio, TX",US,29.4241,-98.4936
+"Tempe, AZ",US,33.4255,-111.9400
+From Diamond Princess,Australia,35.4437,139.6380
+"Lackland, TX (From Diamond Princess)",US,29.3829,-98.6134
+"Omaha, NE (From Diamond Princess)",US,41.2545,-95.9758
+"Travis, CA (From Diamond Princess)",US,38.2721,-121.9399

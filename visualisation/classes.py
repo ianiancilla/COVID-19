@@ -4,20 +4,39 @@ from datetime import datetime
 from plotly.graph_objs import Scattergeo, Layout
 from plotly import offline
 
-from helper import calculate_active, calculate_death_rate, make_hover_txt, marker_size
-
+from helper import calculate_active, calculate_death_rate, make_hover_txt, marker_size, make_int
 
 class DataSet():
     def __init__(self, origin_folder):
         self.origin_folder = origin_folder
 
+        # create geo locations dictionary (necessary for January and February months, which have no location data)
+        self.geo_dic = self._make_geo_dic()
+
         # create list of day objects
         self.days = []
         for filename in os.scandir(self.origin_folder):
             if (filename.path.endswith(".csv")) and filename.is_file():
-                if os.path.basename(filename.path)[:2] != "01" \
-                        and os.path.basename(filename.path)[:2] != "02":    # TODO remove this after I figure locations for older files
-                    self.days.append(Day(filename))
+                self.days.append(Day(filename, self))
+
+    def _make_geo_dic(self):
+        """ uses geo_locations.csv to create a dic of geo locations based on region """
+        print("Creating geo location dictionary...")
+        dic = {}
+        with open("geo_locations.csv") as f:
+            reader = csv.reader(f)
+            header_row = next(reader)  # leaving this as it lets me skip header
+            # for index, column_header in enumerate(header_row):
+            #     print(index, column_header
+            for row in reader:
+                if row[0]:
+                    dic[row[0]] = {"lat": row[2],
+                                        "lon": row[3]}
+                else:
+                    dic[row[1]] = {"lat": row[2],
+                                        "lon": row[3]}
+        print("Geo locations dictionary created")
+        return dic
 
     def make_scatter_geo(self, destination):
         """ creates a scattergeo html map of each day in the destination folder
@@ -34,12 +53,13 @@ class Day():
     a class to draw from the available data
     """
 
-    def __init__(self, filename):
+    def __init__(self, filename, dataset):
         """
         Creates a Day instance
         :param filename: a file from the csse_covid_19_data/csse_covid_19_daily_reports folder
         """
         self.filename = filename
+        self.dataset = dataset
 
         print(f"Reading file: {filename} ...")
 
@@ -59,7 +79,7 @@ class Day():
                 "type": "scattergeo",
                 "lon": self.lons,
                 "lat": self.lats,
-                "text": make_hover_txt(self.confirmed, self.recovered, self.deaths, self.active, self.regions),
+                "text": make_hover_txt(self.confirmed, self.recovered, self.deaths, self.active, self.death_rate, self.regions),
                 "marker": {
                     "size": [marker_size(act) for act in self.active],
                     "cmin": 0,
@@ -84,29 +104,71 @@ class Day():
             reader = csv.reader(f)
             header_row = next(reader)  # leaving this as it lets me skip header
             # for index, column_header in enumerate(header_row):
-            #     print(index, column_header)
+            #     print(index, column_header
 
             regions, confirmed, deaths, recovered, lats, lons = [], [], [], [], [], []
             time = None
 
             for row in reader:
-                if not time:
-                    time = datetime.strptime(row[2], "%Y-%m-%dT%H:%M:%S")
-                try:
-                    confirmed.append(int(row[3]))
-                    deaths.append(int(row[4]))
-                    recovered.append(int(row[5]))
-                    lats.append(row[6])
-                    lons.append(row[7])
+                if not time:    # on the first iteration, gets the day the file refers to
+                    time_str = row[2]
+                    try:
+                        time = self.parse_time(time_str)
+                    except:
+                        continue
+
+                # change empty numbers in Confirmed, Deaths and Recovered to 0 to solve inconsistent formatting
+                for entry in [row[3], row[4], row[5]]:
+                    if not entry:
+                        entry = 0
+
+                try:    # if no data is missing
+                    conf = make_int(row[3])
+                    deat = make_int(row[4])
+                    reco = make_int(row[5])
+
+                    try:    # only try because Jan and Feb have no geo location, which is added via dataset.geo_dic
+                        lat = row[6]
+                        lon = row[7]
+                    except IndexError:
+                        try:
+                            if row[0]:    # if location has region name, get that in self.geo dic
+                                loc = self.dataset.geo_dic[row[0]]
+                            else:
+                                loc = self.dataset.geo_dic[row[1]]
+                            lat = loc["lat"]
+                            lon = loc["lon"]
+                        except KeyError:
+                            continue
+
+                    confirmed.append(conf)
+                    deaths.append(deat)
+                    recovered.append(reco)
+                    lats.append(lat)
+                    lons.append(lon)
+
                     if row[0]:
                         regions.append(f"{row[0]}, {row[1]}")
                     else:
                         regions.append(row[1])
 
-                except ValueError or IndexError:
+                except ValueError:
                     print(f"Missing data for {row[1]} of file {self.filename}")
 
         return time, regions, confirmed, deaths, recovered, lats, lons
+
+    def parse_time(self, time_str):
+        """ tries to deal with the fact the first month have inconsistently formatted time """
+        try:
+            time = datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S")
+        except ValueError:  # Jan is formatted differently
+            if time_str[2] != "/":
+                time_str = "0" + time_str
+            try:
+                time = datetime.strptime(time_str, "%m/%d/%y %H:%M")
+            except ValueError:
+                time = datetime.strptime(time_str, "%m/%d/%Y %H:%M")
+        return time
 
     def make_scattergeo(self, destination):
         """ creates a scattergeo html map of the current day in the destination folder
