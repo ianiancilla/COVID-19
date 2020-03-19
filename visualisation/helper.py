@@ -1,12 +1,13 @@
 """ helper functions """
 from math import sqrt
 
-def make_int(x):
-    """ returns x as an int, avoiding the pesky behaviour of int(0) """
-    if x == 0:
-        return x
+def get_value_as_int(value):
+    """ takes an index of a csv row, and returns it as an int, replacing with 0 of empty
+    :param value: an index of a row from a csv.reader object"""
+    if not value or value == 0:
+        return 0
     else:
-        return int(x)
+        return int(value)
 
 def calculate_active(confirmed, recovered, deaths):
     """ creates a list of active cases, by subtracting recoveries and deaths from confirmed

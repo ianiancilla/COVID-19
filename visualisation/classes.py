@@ -1,10 +1,11 @@
 import os
 import csv
 from datetime import datetime
-from plotly.graph_objs import Scattergeo, Layout
+import plotly.graph_objs as go
 from plotly import offline
 
-from helper import calculate_active, calculate_death_rate, make_hover_txt, marker_size, make_int
+from helper import calculate_active, calculate_death_rate, make_hover_txt, marker_size, get_value_as_int
+
 
 class DataSet():
     def __init__(self, origin_folder):
@@ -92,10 +93,12 @@ class Day():
                                  },
                 }
             }],
+
             "title": f"<b>Spread of Coronavirus on {datetime.strftime(self.time, '%d/%b/%Y')}</b><br>"
                      f"<br>"
                      f"Size of markers denotes current active cases. Hover for more info.",
         }
+
 
     def get_data(self):
         """ extracts lists of data from csv file
@@ -117,15 +120,10 @@ class Day():
                     except:
                         continue
 
-                # change empty numbers in Confirmed, Deaths and Recovered to 0 to solve inconsistent formatting
-                for entry in [row[3], row[4], row[5]]:
-                    if not entry:
-                        entry = 0
-
                 try:    # if no data is missing
-                    conf = make_int(row[3])
-                    deat = make_int(row[4])
-                    reco = make_int(row[5])
+                    conf = get_value_as_int(row[3])
+                    deat = get_value_as_int(row[4])
+                    reco = get_value_as_int(row[5])
 
                     try:    # only try because Jan and Feb have no geo location, which is added via dataset.geo_dic
                         lat = row[6]
@@ -141,16 +139,22 @@ class Day():
                         except KeyError:
                             continue
 
-                    confirmed.append(conf)
-                    deaths.append(deat)
-                    recovered.append(reco)
-                    lats.append(lat)
-                    lons.append(lon)
-
                     if row[0]:
-                        regions.append(f"{row[0]}, {row[1]}")
+                        region = f"{row[0]}, {row[1]}"
                     else:
-                        regions.append(row[1])
+                        region = row[1]
+
+                    if conf >= (reco + deat):
+                        confirmed.append(conf)
+                        deaths.append(deat)
+                        recovered.append(reco)
+                        lats.append(lat)
+                        lons.append(lon)
+                        regions.append(region)
+                    else:
+                        print(f"Inconsistent data for {region} region on {time}. Please check data source.")
+                        continue
+
 
                 except ValueError:
                     print(f"Missing data for {row[1]} of file {self.filename}")
@@ -177,10 +181,10 @@ class Day():
 
         print(f"Creating file: {os.path.join(destination, html_name)}")
 
-        my_layout = Layout(title=self.scatter_geo["title"])
+        my_layout = go.Layout(title=self.scatter_geo["title"])
+
         fig = {"data": self.scatter_geo["data"], "layout": my_layout}
 
         offline.plot(fig, filename=os.path.join(destination, html_name), auto_open=False)
-
 
 

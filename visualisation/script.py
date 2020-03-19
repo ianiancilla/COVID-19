@@ -5,3 +5,4 @@ destination = "./output/"
 
 dataset = DataSet(origin_folder)
 dataset.make_scatter_geo(destination)
+
