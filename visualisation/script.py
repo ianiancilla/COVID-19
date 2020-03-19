@@ -5,4 +5,5 @@ destination = "./output/"
 
 dataset = DataSet(origin_folder)
 dataset.make_scatter_geo(destination)
-
+dataset.make_choro_active(destination)
+dataset.make_choro_death_rate(destination)

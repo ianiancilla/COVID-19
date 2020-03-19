@@ -1,5 +1,7 @@
 """ helper functions """
 from math import sqrt
+import csv
+
 
 def get_value_as_int(value):
     """ takes an index of a csv row, and returns it as an int, replacing with 0 of empty
@@ -8,6 +10,7 @@ def get_value_as_int(value):
         return 0
     else:
         return int(value)
+
 
 def calculate_active(confirmed, recovered, deaths):
     """ creates a list of active cases, by subtracting recoveries and deaths from confirmed
@@ -50,3 +53,62 @@ def marker_size(act):
         return size
     else:
         return 6
+
+
+def make_country_dict(filename):
+    """ tales a csv file with country codes, and returns a dictionary of these codes """
+    print("Creating country code dictionary...")
+    with open(filename) as f:
+        reader = csv.reader(f)
+        header_row = next(reader)
+
+        names, iso_3 = [], []
+        for row in reader:
+            names.append(row[0])
+            iso_3.append(row[3])
+
+    dic = {}
+    for i in range(len(names)):
+        dic[names[i].lower()] = iso_3[i]
+
+    print("Country code dictionary created successfully.")
+
+    return dic
+
+def make_iso_data(day):
+    iso_data = {}
+
+    for i in range(len(day.iso_3)):    # per ogni regione di un tal giorno
+        current_iso = day.iso_3[i]
+        if not current_iso in iso_data.keys():
+            iso_data[current_iso] = {
+                "time": day.time,
+                "country": day.countries[i],
+                "confirmed": day.confirmed[i],
+                "deaths": day.deaths[i],
+                "recovered": day.recovered[i],
+            }
+        else:
+            iso_data[current_iso]["confirmed"] += iso_data[current_iso]["confirmed"]
+            iso_data[current_iso]["deaths"] += iso_data[current_iso]["deaths"]
+            iso_data[current_iso]["recovered"] += iso_data[current_iso]["recovered"]
+
+    iso_iso, iso_conf, iso_rec, iso_dea, iso_act, iso_dr, iso_reg = [], [], [], [], [], [], []
+
+    for k in iso_data:
+        iso_data[k]["active"] = (iso_data[k]["confirmed"] - iso_data[k]["recovered"] - iso_data[k]["deaths"])
+        try:
+            iso_data[k]["death_rate"] = iso_data[k]["deaths"] / iso_data[k]["confirmed"]
+        except ZeroDivisionError:
+            iso_data[k]["death_rate"] = 0
+
+        iso_conf.append(iso_data[k]["confirmed"])
+        iso_rec.append(iso_data[k]["recovered"])
+        iso_dea.append(iso_data[k]["deaths"])
+        iso_act.append(iso_data[k]["active"])
+        iso_dr.append(iso_data[k]["death_rate"])
+        iso_reg.append(iso_data[k]["country"])
+        iso_iso.append(k)
+
+    return iso_iso, iso_conf, iso_rec, iso_dea, iso_act, iso_dr, iso_reg
+
