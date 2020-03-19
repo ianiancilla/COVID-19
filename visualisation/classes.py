@@ -65,7 +65,7 @@ class DataSet():
                 :param destination: a valid directory where to output html files"""
         print("Starting to create active cases choropleth files...")
         for day in self.days:
-            day.make_cloropleth(day.active, "Active cases",
+            day.make_cloropleth(day.iso_act, "Active cases",
                                 min=0,
                                 max=self._get_max_confirmed(),
                                 destination=destination)
@@ -76,7 +76,7 @@ class DataSet():
                 :param destination: a valid directory where to output html files"""
         print("Starting to create death rate choropleth files...")
         for day in self.days:
-            day.make_cloropleth(day.death_rate, "Death rate",
+            day.make_cloropleth(day.iso_dr, "Death rate",
                                 min=0,
                                 max=1,
                                 destination=destination)
